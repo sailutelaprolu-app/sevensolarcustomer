@@ -82,7 +82,20 @@
     <div id="otpSection">
       <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" />
       <button onclick="login()">Submit</button>
-    </div>
+      <script>
+  function submitOTP() {
+    const otp = document.getElementById("otp").value;
+    
+    // Simulated OTP validation (in real case you'd check from backend)
+    if (otp.trim() !== "") {
+      // ✅ Redirect to customer dashboard
+      window.location.href = "customer-dashboard.html";
+    } else {
+      alert("Please enter a valid OTP.");
+    }
+  }
+</script>
+</div>
   </div>
 </body>
 </html>

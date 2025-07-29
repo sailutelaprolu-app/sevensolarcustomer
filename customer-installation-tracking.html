@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Installation Tracking - Customer</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe082, #ffcc80);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 150px;
+    }
+    h2 {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #ffb74d;
+      color: #4e342e;
+    }
+    .feedback {
+      margin-top: 30px;
+      text-align: center;
+    }
+    textarea {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e64a19;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-bar" style="background-color:#ffb74d; padding: 10px; text-align: center; margin-bottom: 20px;">
+  <a href="customer-dashboard.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Dashboard</a>
+  <a href="project-details.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Project Details</a>
+  <a href="customer-installation-tracking.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Installation Tracking</a>
+  <a href="complaint-registration.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Register Complaint</a>
+  <a href="complaint-status.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Complaint Status</a>
+  <a href="existing-customer-login.html" style="margin: 0 10px; text-decoration: none; color: #b71c1c; font-weight: bold;">Logout</a>
+</div>
+
+  <div class="container">
+    <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo" />
+    <h2>Installation Tracker - Customer View</h2>
+
+    <table>
+      <tr>
+        <th>Stage</th>
+        <th>Status</th>
+        <th>Updated On</th>
+      </tr>
+      <tr>
+        <td>Site Survey</td>
+        <td>Completed</td>
+        <td>2025-07-20</td>
+      </tr>
+      <tr>
+        <td>Quotation Finalized</td>
+        <td>Completed</td>
+        <td>2025-07-21</td>
+      </tr>
+      <tr>
+        <td>Installation Started</td>
+        <td>In Progress</td>
+        <td>2025-07-28</td>
+      </tr>
+      <tr>
+        <td>Installation Completed</td>
+        <td>Pending</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Inspection & Approval</td>
+        <td>Pending</td>
+        <td>-</td>
+      </tr>
+    </table>
+
+    <div class="feedback">
+      <h3>Feedback / Remarks</h3>
+      <textarea rows="4" placeholder="Enter your remarks or suggestions here..."></textarea><br/>
+      <button>Submit Feedback</button>
+    </div>
+  </div>
+</body>
+</html>

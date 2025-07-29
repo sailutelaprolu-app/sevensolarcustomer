@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Dashboard - Seven Solar</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe082, #ffcc80);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo {
+      width: 140px;
+      margin: 20px auto;
+    }
+    h2 {
+      color: #e65100;
+      margin-bottom: 30px;
+    }
+    .dashboard {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 15px 0;
+      font-size: 16px;
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #ff5722;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-bar" style="background-color:#ffb74d; padding: 10px; text-align: center; margin-bottom: 20px;">
+  <a href="customer-dashboard.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Dashboard</a>
+  <a href="project-details.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Project Details</a>
+  <a href="customer-installation-tracking.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Installation Tracking</a>
+  <a href="complaint-registration.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Register Complaint</a>
+  <a href="complaint-status.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Complaint Status</a>
+  <a href="existing-customer-login.html" style="margin: 0 10px; text-decoration: none; color: #b71c1c; font-weight: bold;">Logout</a>
+</div>
+
+  <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo">
+  <div class="dashboard">
+    <h2>Customer Dashboard</h2>
+    <button class="button" onclick="location.href='project-details.html'">Details of Solar Project</button>
+    <button class="button" onclick="location.href='installation-tracking.html'">Installation Tracking</button>
+    <button class="button" onclick="location.href='complaint-registration.html'">Complaint Registration</button>
+    <button class="button" onclick="location.href='complaint-status.html'">Complaint Status</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Complaint Registration - Seven Solar</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe082, #ffcc80);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 140px;
+    }
+    h2 {
+      text-align: center;
+      color: #e65100;
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #ff7043;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #ff5722;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nav-bar" style="background-color:#ffb74d; padding: 10px; text-align: center; margin-bottom: 20px;">
+  <a href="customer-dashboard.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Dashboard</a>
+  <a href="project-details.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Project Details</a>
+  <a href="customer-installation-tracking.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Installation Tracking</a>
+  <a href="complaint-registration.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Register Complaint</a>
+  <a href="complaint-status.html" style="margin: 0 10px; text-decoration: none; color: #4e342e; font-weight: bold;">Complaint Status</a>
+  <a href="existing-customer-login.html" style="margin: 0 10px; text-decoration: none; color: #b71c1c; font-weight: bold;">Logout</a>
+</div>
+
+  <div class="container">
+    <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo" />
+    <h2>Complaint Registration</h2>
+    <form>
+      <label for="connNo">Power Connection Number:</label>
+      <input type="text" id="connNo" placeholder="Enter connection number" required />
+
+      <label for="issue">Complaint Type:</label>
+      <select id="issue" required>
+        <option value="">-- Select Complaint --</option>
+        <option>Panel Not Working</option>
+        <option>Inverter Fault</option>
+        <option>Metering Issue</option>
+        <option>Billing Discrepancy</option>
+        <option>Subsidy Not Received</option>
+        <option>Others</option>
+      </select>
+
+      <label for="desc">Issue Description:</label>
+      <textarea id="desc" placeholder="Describe the issue in detail..." rows="4" required></textarea>
+
+      <button type="submit">Submit Complaint</button>
+    </form>
+  </div>
+</body>
+</html>

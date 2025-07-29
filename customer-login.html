@@ -31,6 +31,7 @@
       margin: 12px 0;
       border: 1px solid #ccc;
       border-radius: 6px;
+      font-size: 15px;
     }
     button {
       background-color: #ff7043;
@@ -53,7 +54,7 @@
   <script>
     function showOTP() {
       const mobile = document.getElementById('mobile').value;
-      if (mobile.length === 10) {
+      if (mobile.length === 10 && /^[6-9]\d{9}$/.test(mobile)) {
         document.getElementById('otpSection').style.display = 'block';
       } else {
         alert("Please enter a valid 10-digit mobile number.");
@@ -62,8 +63,8 @@
 
     function login() {
       const otp = document.getElementById('otp').value;
-      if (otp.trim().length === 6) {
-        // ✅ Redirect to dashboard
+      if (otp.trim().length === 6 && /^\d{6}$/.test(otp)) {
+        // ✅ Mock OTP check — Replace with real API in production
         window.location.href = "customer-dashboard.html";
       } else {
         alert("Invalid OTP. Please enter a 6-digit OTP.");
@@ -75,6 +76,7 @@
   <div class="container">
     <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo" />
     <h2>Existing Customer Login</h2>
+    
     <input type="tel" id="mobile" placeholder="Enter Mobile Number" maxlength="10" />
     <button onclick="showOTP()">Send OTP</button>
     

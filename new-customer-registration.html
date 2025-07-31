@@ -108,5 +108,50 @@
             <button type="submit" class="submit-btn">Submit Registration</button>
         </form>
     </div>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault(); // Prevent form from reloading the page
+
+      const data = {
+        fullName: form.elements[0].value,
+        mobileNumber: form.elements[1].value,
+        email: form.elements[2].value,
+        powerConnectionNumber: form.elements[3].value,
+        address: form.elements[4].value,
+        solarType: form.elements[5].value,
+        loadRequirementKW: form.elements[6].value,
+        subsidyOption: form.elements[7].checked ? "Subsidy" : "Non-Subsidy",
+        panelBrand: form.elements[9].value,
+        inverterBrand: form.elements[10].value,
+        remarks: form.elements[11].value
+      };
+
+      try {
+        const response = await fetch("http://localhost:5000/api/customers/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.status === 201) {
+          alert("✅ Registration successful!");
+          form.reset();
+        } else {
+          alert("❌ Registration failed: " + result.error);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("❌ Server error. Please try again.");
+      }
+    });
+  });
+</script>
 </body>
 </html>

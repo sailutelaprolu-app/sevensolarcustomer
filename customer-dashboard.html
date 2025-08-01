@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +19,7 @@
     }
     h2 {
       color: #e65100;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
     .dashboard {
       background-color: #ffffff;
@@ -60,13 +59,41 @@
   <a href="existing-customer-login.html" style="margin: 0 10px; text-decoration: none; color: #b71c1c; font-weight: bold;">Logout</a>
 </div>
 
-  <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo">
-  <div class="dashboard">
-    <h2>Customer Dashboard</h2>
-    <button class="button" onclick="location.href='project-details.html'">Details of Solar Project</button>
-    <button class="button" onclick="location.href='installation-tracking.html'">Installation Tracking</button>
-    <button class="button" onclick="location.href='complaint-registration.html'">Complaint Registration</button>
-    <button class="button" onclick="location.href='complaint-status.html'">Complaint Status</button>
-  </div>
+<img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo">
+
+<div class="dashboard">
+  <h2 id="welcomeHeading">Customer Dashboard</h2>
+
+  <button class="button" onclick="location.href='project-details.html'">Details of Solar Project</button>
+  <button class="button" onclick="location.href='installation-tracking.html'">Installation Tracking</button>
+  <button class="button" onclick="location.href='complaint-registration.html'">Complaint Registration</button>
+  <button class="button" onclick="location.href='complaint-status.html'">Complaint Status</button>
+</div>
+
+<script>
+  window.onload = async function () {
+    const mobile = localStorage.getItem("mobileNumber");
+
+    if (!mobile) {
+      alert("No mobile number found. Please login again.");
+      window.location.href = "existing-customer-login.html";
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/customers/get-customer/${mobile}`);
+      const data = await res.json();
+
+      if (res.ok && data.customer) {
+        document.getElementById("welcomeHeading").innerText = `Welcome, ${data.customer.name}`;
+      } else {
+        document.getElementById("welcomeHeading").innerText = "Welcome, Customer";
+      }
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
+</script>
+
 </body>
 </html>

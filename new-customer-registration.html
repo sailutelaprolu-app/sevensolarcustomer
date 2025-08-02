@@ -1,114 +1,5 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Customer Registration - Seven Solar</title>
-    <style>
-        body {
-            background: linear-gradient(to right, #ffe082, #ffcc80);
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            background: white;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .logo {
-            display: block;
-            margin: 0 auto 20px auto;
-            max-width: 150px;
-        }
-        h2 {
-            text-align: center;
-            color: #e65100;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-        .submit-btn {
-            margin-top: 25px;
-            width: 100%;
-            padding: 12px;
-            background-color: #ff7043;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .submit-btn:hover {
-            background-color: #ff5722;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo">
-        <h2>New Customer Registration</h2>
-        <form>
-            <label for="name">Full Name</label>
-            <input type="text" id="name" required>
-
-            <label for="mobile">Mobile Number</label>
-            <input type="tel" id="mobile" required>
-
-            <label for="email">Email ID</label>
-            <input type="email" id="email" required>
-
-            <label for="connection">Power Connection Number</label>
-            <input type="text" id="connection" required>
-
-            <label for="address">Address</label>
-            <textarea id="address" rows="3" required></textarea>
-
-            <label for="solar-type">Type of Solar Plant</label>
-            <select id="solar-type" required>
-                <option value="">-- Select --</option>
-                <option value="On-grid">On-grid</option>
-                <option value="Off-grid">Off-grid</option>
-            </select>
-
-            <label for="load">Solar Load Requirement (in kW)</label>
-            <input type="number" id="load" step="0.1" required>
-
-            <label>Subsidy Option</label>
-            <div class="radio-group">
-                <label><input type="radio" name="subsidy" value="Yes" required> Subsidy</label>
-                <label><input type="radio" name="subsidy" value="No" required> Non-Subsidy</label>
-            </div>
-
-            <label for="panel-brand">Preferred Panel Brand (optional)</label>
-            <input type="text" id="panel-brand">
-
-            <label for="inverter-brand">Preferred Inverter Brand (optional)</label>
-            <input type="text" id="inverter-brand">
-
-            <label for="remarks">Remarks / Notes</label>
-            <textarea id="remarks" rows="2"></textarea>
-
-            <button type="submit" class="submit-btn">Submit Registration</button>
-        </form>
-    </div>
-    <script>
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
 
@@ -130,7 +21,7 @@
       };
 
       try {
-        const response = await fetch("http://localhost:5000/api/customers/register", {
+        const response = await fetch("https://sevensolar-backend.onrender.com/api/customers/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -153,5 +44,3 @@
     });
   });
 </script>
-</body>
-</html>

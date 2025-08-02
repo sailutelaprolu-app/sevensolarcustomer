@@ -108,7 +108,6 @@
         </form>
     </div>
 
-    <!-- ✅ SCRIPT MOVED TO BOTTOM TO AVOID NULL ERROR -->
     <script>
         const form = document.querySelector("form");
 
@@ -121,11 +120,11 @@
                 email: document.getElementById("email").value,
                 powerConnectionNumber: document.getElementById("connection").value,
                 address: document.getElementById("address").value,
-                solarType: document.getElementById("solar-type").value,
-                loadRequirementKW: document.getElementById("load").value,
-                subsidyOption: document.querySelector('input[name="subsidy"]:checked').value,
-                panelBrand: document.getElementById("panel-brand").value,
-                inverterBrand: document.getElementById("inverter-brand").value,
+                typeOfSolarPlant: document.getElementById("solar-type").value,
+                solarLoadRequirement: document.getElementById("load").value,
+                subsidyOption: document.querySelector('input[name="subsidy"]:checked').value === "Yes" ? "Subsidy" : "Non-Subsidy",
+                preferredPanelBrand: document.getElementById("panel-brand").value,
+                preferredInverterBrand: document.getElementById("inverter-brand").value,
                 remarks: document.getElementById("remarks").value
             };
 
@@ -144,7 +143,7 @@
                     alert("✅ Registration successful!");
                     form.reset();
                 } else {
-                    alert("❌ Registration failed: " + result.error);
+                    alert("❌ Registration failed: " + (result.error || "Error registering customer"));
                 }
             } catch (error) {
                 console.error("Error:", error);

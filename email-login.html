@@ -7,49 +7,62 @@
     body {
       background: linear-gradient(to right, #ffe082, #ffcc80);
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
+      margin: 0;
     }
+
     .container {
       background: white;
       padding: 40px;
       border-radius: 14px;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
       text-align: center;
-      width: 400px;
     }
+
     .logo {
-      width: 160px;
+      width: 130px;
       margin-bottom: 20px;
     }
+
     h2 {
       color: #e65100;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     input {
       width: 100%;
       padding: 12px;
-      margin: 12px 0;
+      margin: 10px 0;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      font-size: 15px;
     }
+
     .btn {
       width: 100%;
       padding: 12px;
       background-color: #ff7043;
       color: white;
-      border: none;
-      border-radius: 8px;
       font-size: 16px;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      margin-top: 10px;
     }
+
     .btn:hover {
       background-color: #f4511e;
+    }
+
+    #otpSection {
+      display: none;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -59,39 +72,36 @@
     <h2>Existing Customer Login</h2>
 
     <input type="email" id="email" placeholder="Enter your Email ID" required />
-    <button class="btn" onclick="sendOtp()">Send OTP</button>
+    <button class="btn" onclick="sendOTP()">Send OTP</button>
 
-    <div id="otpSection" style="display: none;">
-      <input type="text" id="otp" placeholder="Enter OTP" />
-      <button class="btn" onclick="verifyOtp()">Verify OTP</button>
+    <div id="otpSection">
+      <input type="text" id="otp" placeholder="Enter OTP" required />
+      <button class="btn" onclick="verifyOTP()">Verify OTP</button>
     </div>
   </div>
 
   <script>
-    function sendOtp() {
+    const simulatedOTP = "123456";
+
+    function sendOTP() {
       const email = document.getElementById("email").value;
-      if (!email) {
-        alert("Please enter your email.");
+      if (!email || !email.includes("@")) {
+        alert("Please enter a valid email address.");
         return;
       }
 
-      // ✅ You can integrate backend OTP sending logic here
-      console.log("Sending OTP to:", email);
-
-      // Show OTP section
+      alert(`✅ OTP sent to ${email} (Simulated OTP: ${simulatedOTP})`);
       document.getElementById("otpSection").style.display = "block";
     }
 
-    function verifyOtp() {
-      const otp = document.getElementById("otp").value;
-      if (!otp) {
-        alert("Please enter the OTP.");
-        return;
+    function verifyOTP() {
+      const enteredOTP = document.getElementById("otp").value;
+      if (enteredOTP === simulatedOTP) {
+        alert("✅ OTP Verified. Redirecting to dashboard...");
+        window.location.href = "customer-dashboard.html";
+      } else {
+        alert("❌ Invalid OTP. Please try again.");
       }
-
-      // ✅ You can add OTP verification logic here
-      alert("✅ OTP Verified! Redirecting to dashboard...");
-      // window.location.href = "dashboard.html"; // optional
     }
   </script>
 </body>

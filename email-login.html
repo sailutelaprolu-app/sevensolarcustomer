@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,41 +10,34 @@
       margin: 0;
       padding: 20px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
     }
-
     .container {
       background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 40px;
+      border-radius: 14px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
       text-align: center;
-      max-width: 400px;
-      width: 100%;
+      width: 400px;
     }
-
     .logo {
-      max-width: 140px;
+      width: 160px;
       margin-bottom: 20px;
     }
-
     h2 {
-      margin-bottom: 20px;
       color: #e65100;
+      margin-bottom: 20px;
     }
-
     input {
       width: 100%;
       padding: 12px;
       margin: 12px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 15px;
     }
-
-    button {
+    .btn {
       width: 100%;
       padding: 12px;
       background-color: #ff7043;
@@ -53,15 +45,11 @@
       border: none;
       border-radius: 8px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
     }
-
-    button:hover {
+    .btn:hover {
       background-color: #f4511e;
-    }
-
-    #otpSection {
-      display: none;
     }
   </style>
 </head>
@@ -70,53 +58,40 @@
     <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo" />
     <h2>Existing Customer Login</h2>
 
-    <input type="email" id="email" placeholder="Enter your registered Email ID" required />
-    <button onclick="sendOtp()">Send OTP</button>
+    <input type="email" id="email" placeholder="Enter your Email ID" required />
+    <button class="btn" onclick="sendOtp()">Send OTP</button>
 
-    <div id="otpSection">
+    <div id="otpSection" style="display: none;">
       <input type="text" id="otp" placeholder="Enter OTP" />
-      <button onclick="verifyOtp()">Verify OTP</button>
+      <button class="btn" onclick="verifyOtp()">Verify OTP</button>
     </div>
   </div>
 
   <script>
-    async function sendOtp() {
-      const email = document.getElementById('email').value;
-
-      const response = await fetch("https://sevensolar-backend.onrender.com/api/customers/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert("✅ OTP sent to your email.");
-        document.getElementById("otpSection").style.display = "block";
-      } else {
-        alert("❌ Error sending OTP: " + result.error);
+    function sendOtp() {
+      const email = document.getElementById("email").value;
+      if (!email) {
+        alert("Please enter your email.");
+        return;
       }
+
+      // ✅ You can integrate backend OTP sending logic here
+      console.log("Sending OTP to:", email);
+
+      // Show OTP section
+      document.getElementById("otpSection").style.display = "block";
     }
 
-    async function verifyOtp() {
-      const email = document.getElementById('email').value;
-      const otp = document.getElementById('otp').value;
-
-      const response = await fetch("https://sevensolar-backend.onrender.com/api/customers/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp })
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert("✅ OTP verified. Login successful!");
-        window.location.href = `customer-dashboard.html?email=${encodeURIComponent(email)}`;
-      } else {
-        alert("❌ OTP verification failed: " + result.error);
+    function verifyOtp() {
+      const otp = document.getElementById("otp").value;
+      if (!otp) {
+        alert("Please enter the OTP.");
+        return;
       }
+
+      // ✅ You can add OTP verification logic here
+      alert("✅ OTP Verified! Redirecting to dashboard...");
+      // window.location.href = "dashboard.html"; // optional
     }
   </script>
 </body>

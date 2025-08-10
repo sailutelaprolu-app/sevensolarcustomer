@@ -115,8 +115,6 @@
 
     <!-- Send OTP -->
     <button id="sendBtn" class="btn">Send OTP</button>
-    <div id="sendHint" class="hint">You’ll receive a 6-digit OTP. (For testing, use <b>123456</b>.)</div>
-
     <!-- OTP section (hidden until Send OTP) -->
     <div id="otpSection" class="hidden">
       <label for="otp">Enter OTP</label>
@@ -133,7 +131,7 @@
     // --------------------------
     // CONFIG
     // --------------------------
-    const USE_BACKEND_OTP = false; // 🔁 Flip to true when your backend OTP is ready
+    const USE_BACKEND_OTP = true; // 🔁 Flip to true when your backend OTP is ready
     const CONFIG = {
       baseUrl: "https://sevensolar-backend.onrender.com",   // change if needed
       generateEndpoint: "/api/otp/generate-otp",

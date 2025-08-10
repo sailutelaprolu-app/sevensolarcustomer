@@ -71,7 +71,17 @@
 </div>
 
 <script>
-  // If you deployed backend, set this to your Render URL:
+ window.onload = function () {
+  const email = localStorage.getItem("customerEmail");
+  if (!email) {
+    alert("No email found. Please login again.");
+    window.location.href = "email-login.html";
+    return;
+  }
+
+  document.getElementById("welcomeHeading").innerText = `Welcome, ${email}`;
+};
+ // If you deployed backend, set this to your Render URL:
   const API_BASE = "https://sevensolar-backend.onrender.com"; // or "http://localhost:5000"
 
   window.onload = async function () {

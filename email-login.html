@@ -3,106 +3,276 @@
 <head>
   <meta charset="UTF-8" />
   <title>Existing Customer Login - Seven Solar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      background: linear-gradient(to right, #ffe082, #ffcc80);
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+    :root {
+      --accent: #ff7043;
+      --accent-hover: #f4511e;
+      --text: #4e342e;
+      --card-bg: #fff;
+      --bg1: #ffe082;
+      --bg2: #ffcc80;
+      --shadow: 0 6px 15px rgba(0,0,0,0.15);
+      --radius: 12px;
     }
-
-    .container {
-      background: white;
-      padding: 40px;
-      border-radius: 14px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, var(--bg1), var(--bg2));
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: var(--text);
+    }
+    .card {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
       text-align: center;
     }
-
     .logo {
-      width: 130px;
-      margin-bottom: 20px;
+      width: 160px;
+      display: block;
+      margin: 6px auto 18px;
     }
-
     h2 {
+      margin: 0 0 22px;
       color: #e65100;
-      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 22px;
     }
-
-    input {
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 700;
+      margin: 14px 0 6px;
+      font-size: 14px;
+    }
+    input[type="email"],
+    input[type="text"] {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       font-size: 15px;
+      outline: none;
     }
-
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,112,67,0.15);
+    }
     .btn {
       width: 100%;
-      padding: 12px;
-      background-color: #ff7043;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
+      padding: 12px 14px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
       cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.2s ease;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn[disabled] {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    .hint {
+      font-size: 12px;
+      color: #6d4c41;
+      margin-top: 8px;
+    }
+    .otp-row {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 10px;
+      align-items: end;
+    }
+    .hidden { display: none !important; }
+    .status {
       margin-top: 10px;
-    }
-
-    .btn:hover {
-      background-color: #f4511e;
-    }
-
-    #otpSection {
-      display: none;
-      margin-top: 20px;
+      font-size: 13px;
+      color: #6d4c41;
+      min-height: 16px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <img src="seven-solar-logo-enhanced.jpg" alt="Seven Solar Logo" class="logo" />
     <h2>Existing Customer Login</h2>
 
-    <input type="email" id="email" placeholder="Enter your Email ID" required />
-    <button class="btn" onclick="sendOTP()">Send OTP</button>
+    <!-- Email -->
+    <label for="email">Email address</label>
+    <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
 
-    <div id="otpSection">
-      <input type="text" id="otp" placeholder="Enter OTP" required />
-      <button class="btn" onclick="verifyOTP()">Verify OTP</button>
+    <!-- Send OTP -->
+    <button id="sendBtn" class="btn">Send OTP</button>
+    <div id="sendHint" class="hint">You’ll receive a 6-digit OTP. (For testing, use <b>123456</b>.)</div>
+
+    <!-- OTP section (hidden until Send OTP) -->
+    <div id="otpSection" class="hidden">
+      <label for="otp">Enter OTP</label>
+      <div class="otp-row">
+        <input type="text" id="otp" inputmode="numeric" maxlength="6" placeholder="6-digit code" />
+        <button id="verifyBtn" class="btn" type="button">Verify OTP</button>
+      </div>
+      <div class="status" id="status"></div>
+      <button id="resendBtn" class="btn" type="button" disabled>Resend OTP (30s)</button>
     </div>
   </div>
 
   <script>
-    const simulatedOTP = "123456";
+    // --------------------------
+    // CONFIG
+    // --------------------------
+    const USE_BACKEND_OTP = false; // 🔁 Flip to true when your backend OTP is ready
+    const CONFIG = {
+      baseUrl: "https://sevensolar-backend.onrender.com",   // change if needed
+      generateEndpoint: "/api/otp/generate-otp",
+      verifyEndpoint: "/api/otp/verify-otp",
+      simulatedOtp: "123456",
+      resendCooldown: 30 // seconds
+    };
 
-    function sendOTP() {
-      const email = document.getElementById("email").value;
-      if (!email || !email.includes("@")) {
+    // --------------------------
+    // DOM
+    // --------------------------
+    const emailInput   = document.getElementById("email");
+    const sendBtn      = document.getElementById("sendBtn");
+    const otpSection   = document.getElementById("otpSection");
+    const otpInput     = document.getElementById("otp");
+    const verifyBtn    = document.getElementById("verifyBtn");
+    const resendBtn    = document.getElementById("resendBtn");
+    const statusEl     = document.getElementById("status");
+
+    // Simple helpers
+    const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+    const setStatus = (msg = "") => statusEl.textContent = msg;
+
+    // --------------------------
+    // SEND OTP
+    // --------------------------
+    sendBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      if (!email || !isValidEmail(email)) {
         alert("Please enter a valid email address.");
+        emailInput.focus();
         return;
       }
 
-      alert(`✅ OTP sent to ${email} (Simulated OTP: ${simulatedOTP})`);
-      document.getElementById("otpSection").style.display = "block";
+      sendBtn.disabled = true;
+      setStatus("");
+
+      try {
+        if (USE_BACKEND_OTP) {
+          // Live mode: call your backend
+          const res = await fetch(CONFIG.baseUrl + CONFIG.generateEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data?.error || "Failed to send OTP");
+        } else {
+          // Dev mode: simulate a send
+          await new Promise(r => setTimeout(r, 500));
+          console.log("[DEV] Simulated OTP is", CONFIG.simulatedOtp);
+        }
+
+        // Show OTP UI + start resend cooldown
+        otpSection.classList.remove("hidden");
+        otpInput.value = "";
+        otpInput.focus();
+        startResendCooldown(CONFIG.resendCooldown);
+        setStatus("OTP has been sent. (For testing, use 123456)");
+      } catch (err) {
+        console.error(err);
+        alert("Unable to send OTP. Please try again.");
+        sendBtn.disabled = false;
+      }
+    });
+
+    // --------------------------
+    // VERIFY OTP
+    // --------------------------
+    verifyBtn.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+      const otp   = otpInput.value.trim();
+
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
+      if (!otp) {
+        alert("Please enter the OTP.");
+        return;
+      }
+
+      verifyBtn.disabled = true;
+      setStatus("");
+
+      try {
+        if (USE_BACKEND_OTP) {
+          const res = await fetch(CONFIG.baseUrl + CONFIG.verifyEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, otp })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data?.error || "Invalid OTP");
+        } else {
+          // Dev mode: accept only the simulated OTP
+          if (otp !== CONFIG.simulatedOtp) {
+            throw new Error("Invalid OTP (dev mode expects 123456)");
+          }
+        }
+
+        // ✅ Success — persist email for dashboard
+        localStorage.setItem("customerEmail", email);
+
+        // Redirect to dashboard
+        window.location.href = "customer-dashboard.html";
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message || "Verification failed. Try again.");
+        verifyBtn.disabled = false;
+      }
+    });
+
+    // --------------------------
+    // RESEND OTP TIMER
+    // --------------------------
+    let timer;
+    function startResendCooldown(sec) {
+      let remaining = sec;
+      resendBtn.disabled = true;
+      resendBtn.textContent = `Resend OTP (${remaining}s)`;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          resendBtn.disabled = false;
+          resendBtn.textContent = "Resend OTP";
+          sendBtn.disabled = false; // allow send again if needed
+        } else {
+          resendBtn.textContent = `Resend OTP (${remaining}s)`;
+        }
+      }, 1000);
     }
 
-    function verifyOTP() {
-      const enteredOTP = document.getElementById("otp").value;
-      if (enteredOTP === simulatedOTP) {
-        alert("✅ OTP Verified. Redirecting to dashboard...");
-        window.location.href = "customer-dashboard.html";
-      } else {
-        alert("❌ Invalid OTP. Please try again.");
-      }
-    }
+    // Resend just re-triggers the Send OTP flow
+    resendBtn.addEventListener("click", () => {
+      sendBtn.click();
+    });
   </script>
 </body>
 </html>
